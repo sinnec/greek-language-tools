@@ -12,7 +12,7 @@ Import as any other module using the name `greeklt`
 
 `from greeklt import *` 
 
-**capitalize(word)**
+- **capitalize(word)**
 
 Makes a word all caps without accentuation but adds dieresis when necessary:
 
@@ -25,7 +25,7 @@ word = "γάιδαρος"
 ΓΑΪΔΑΡΟΣ
 ```
 
-**remove_accentuation(word)**
+- **remove_accentuation(word)**
 
 Removes accentuation but adds dieresis when necessary, without capitalizing:
 
@@ -48,7 +48,7 @@ cities = ["Όσλο", "Λευκωσία", "Άκαμπα", "Ζυρίχη", "Ρώ�
 ["Άκαμπα", "Ζυρίχη", "Λευκωσία", "Όσλο", "Ρώμη"]
 ```
 
-**convert_final_s(word)**
+- **convert_final_s(word)**
 
 Checks last letter of each word in a string. If it is a `σ` it is converted into a `ς` (final `σ`):
 
@@ -57,7 +57,7 @@ Checks last letter of each word in a string. If it is a `σ` it is converted int
 Φάρος φάρος ΦΑΡΟΣ
 ```
 
-**greek_transliteration(word)**
+- **greek_transliteration(word)**
 
 Transliterates a string written with latin characters into it's equivalent Greek (based on the keys of a QWERTY keyboard):
 
