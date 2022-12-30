@@ -1,4 +1,4 @@
-def check_final_s(string):
+def convert_final_s(string):
     new_string = ""
     for i, letter in enumerate(string):
         if letter == "σ" and (
