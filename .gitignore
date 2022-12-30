@@ -1,4 +1,5 @@
 .venv
 pyproject.toml
-.dis/
+dist/
 *.DS_Store
+greek_language_tools.egg-info/
