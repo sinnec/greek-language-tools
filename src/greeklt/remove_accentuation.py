@@ -1,4 +1,4 @@
-def remove_accentuation(string):
+def remove_accentuation(string: str):
     accents = {
         "ά": "α",
         "έ": "ε",
