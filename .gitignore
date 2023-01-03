@@ -3,3 +3,6 @@ pyproject.toml
 dist/
 *.DS_Store
 greek_language_tools.egg-info/
+__pycache__/
+*__pycache__
+.pytest_cache

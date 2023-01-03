@@ -1,4 +1,4 @@
-def greek_transliteration(string):
+def greek_transliteration(string: str):
     eng = "abcdefghijklmnoprstuvwxyzABCDEFGHIJKLMNOPRSTUVWXYZ"
     el = "αβψδεφγηιξκλμνοπρστθωςχυζΑΒΨΔΕΦΓΗΙΞΚΛΜΝΟΠΡΣΤΘΩςΧΥΖ"
     new_string = ""
