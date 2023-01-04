@@ -1,8 +1,8 @@
 def greek_transliteration(string: str):
     eng = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
     el = "αβψδεφγηιξκλμνοπ;ρστθωςχυζΑΒΨΔΕΦΓΗΙΞΚΛΜΝΟΠ:ΡΣΤΘΩςΧΥΖ"
-    diaresis = {"i": "ΐ", "y": "ΰ"}
-    accent = {"a": "ά", "e": "έ", "h": "ή", "i": "ί", "y": "ύ", "v": "ώ"}
+    diaresis = {"i": "ϊ", "I": "Ϊ", "y": "ϋ", "Y": "Ϋ"}
+    accent = {"a": "ά", "e": "έ", "h": "ή", "i": "ί", "o": "ό", "y": "ύ", "v": "ώ"}
     diaresis_accent = {"i": "ΐ", "y": "ΰ"}
 
     new_string = ""
@@ -14,7 +14,8 @@ def greek_transliteration(string: str):
                 else:
                     new_string += el[eng.index(letter)]
             elif (string[i - 1] == "W" and letter in diaresis.keys()) or (
-                string[i - 1] in (";", ":") and letter in accent.keys()
+                string[i - 1] in (";", ":")
+                and (letter in accent.keys() or letter in diaresis.keys())
             ):
                 continue
             else:
