@@ -257,4 +257,3 @@ def greek_iso_transliteration(string: str):
         if i in el_cap:
             new_string = new_string.replace(i, eng_cap[el_cap.index(i)])
     return new_string
-print(greek_iso_transliteration("Μπαμπας"))
