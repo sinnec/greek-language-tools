@@ -1,4 +1,5 @@
 def greek_iso_transliteration(string: str):
+#   This should all probably be a CSV or something
     el_low = [
         "α",
         "β",
@@ -127,38 +128,44 @@ def greek_iso_transliteration(string: str):
         "NX",
         "NCH"
     ]
-#   Accent based digraphs
-    el_low_acc_digraphs = [
-        "άυ",
-        "αϋ",
-        
-        "έυ",
-        "εϋ",
-        
-        "ήυ",
-        "ηϋ"
 
+    el_mono_digraph_sub = [
+        "Θ",
+        "Χ",
+        "Ψ"
     ]
-    el_mix_acc_digraphs = [
-        "Άυ",
-        "Αϋ",
-        
-        "Έυ",
-        "Εϋ",
-        
-        "Ήυ",
-        "Ηϋ"
-    ]
-    el_cap_acc_digraphs = [
-        "ΆΥ",
-        "ΑΫ",
-        
-        "ΈΥ",
-        "ΕΫ",
-        
-        "ΉΥ",
-        "ΗΫ"
-    ]
+#   Accent based digraphs
+#    el_low_acc_digraphs = [
+#        "άυ",
+#        "αϋ",
+#
+#        "έυ",
+#        "εϋ",
+#
+#        "ήυ",
+#        "ηϋ"
+#
+#    ]
+#    el_mix_acc_digraphs = [
+#        "Άυ",
+#        "Αϋ",
+#
+#        "Έυ",
+#      "Εϋ",
+#
+#        "Ήυ",
+#        "Ηϋ"
+#    ]
+#    el_cap_acc_digraphs = [
+#        "ΆΥ",
+#        "ΑΫ",
+#
+#        "ΈΥ",
+#        "ΕΫ",
+#
+#        "ΉΥ",
+#        "ΗΫ"
+#    ]
     el_mp_digraph = [
         "ΜΠ",
         "Μπ",
@@ -221,10 +228,11 @@ def greek_iso_transliteration(string: str):
     ]
     print(string)
     new_string = string
-#   Program can't handle ς, replace it
+#   Replace ς with σ
     new_string = new_string.replace("ς","σ")
 #   if el_low_acc_digraphs or el_mix_acc_digraphs or el_cap_acc_digraphs in string:
-#   Do nothing, we don't care
+#   Do nothing, we don't care with current implementation
+
 #   Replace all digraphs so they're ignored by the simple transcription
     for i in el_simple_digraphs:
         if i in string:
@@ -233,10 +241,7 @@ def greek_iso_transliteration(string: str):
     for i in el_simple_cap_digraphs:
         if i in string:
             new_string = new_string.replace(i, eng_simple_cap_digraphs[el_simple_digraphs.index(i)])
-#   At the moment we don't care, but in future we need to account for accents too
-#   for i in el_low_acc_digraphs
-#       if i in string:
-#            new_string.replace(i, )
+#   TODO: ROMANIZE ACCENTS
     for i in el_mp_digraph:
         if i in string:
             if string.startswith(i):
@@ -250,10 +255,18 @@ def greek_iso_transliteration(string: str):
             for loop in xu_sound_modifiers_v:
                 if string[string.find(i)+1] in loop:
                     new_string = new_string.replace(i, eng_xu_digraphs[el_xu_digraphs.index(i)])
+#   Simple transliteration
     for i in el_low:
         if i in el_low:
             new_string = new_string.replace(i, eng_low[el_low.index(i)])
     for i in el_cap:
         if i in el_cap:
             new_string = new_string.replace(i, eng_cap[el_cap.index(i)])
+    #Normalize capital letters if needed
+    print(string)
+    for i in el_mono_digraph_sub:
+        if string.startswith(i):
+            if string[2].islower() == True:
+                new_string = new_string.replace(new_string[1], new_string[1].lower())
     return new_string
+
