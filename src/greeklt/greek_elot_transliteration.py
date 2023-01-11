@@ -1,4 +1,4 @@
-def greek_iso_transliteration(string: str):
+def greek_elot_transliteration(string: str):
 #   This should all probably be a CSV or something
     el_low = [
         "α",
@@ -269,4 +269,3 @@ def greek_iso_transliteration(string: str):
             if string[2].islower() == True:
                 new_string = new_string.replace(new_string[1], new_string[1].lower())
     return new_string
-
