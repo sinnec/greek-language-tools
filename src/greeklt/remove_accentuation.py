@@ -1,4 +1,4 @@
-def remove_accentuation(string: str):
+def remove_accentuation(string: str, modulus=0):
     accents = {
         "ά": "α",
         "έ": "ε",
@@ -23,8 +23,9 @@ def remove_accentuation(string: str):
         char = c
         if c in accents.keys():
             char = accents[c]
-        if c in dieresis.keys() and prev_char in ("ά", "ό", "έ"):
-            char = dieresis[c]
+        if modulus == 0:
+            if c in dieresis.keys() and prev_char in ("ά", "ό", "έ"):
+                char = dieresis[c]
         prev_char = c
         new_string += char
     return new_string

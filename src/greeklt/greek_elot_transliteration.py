@@ -1,128 +1,76 @@
 def greek_elot_transliteration(string: str):
-#   This should all probably be a CSV or something
-    el_low = [
-        "α",
-        "β",
-        "γ",
-        "δ",
-        "ε",
-        "ζ",
-        "η",
-        "θ",
-        "ι",
-        "κ",
-        "λ",
-        "μ",
-        "ν",
-        "ξ",
-        "ο",
-        "π",
-        "ρ",
-        "σ",
-        "τ",
-        "υ",
-        "φ",
-        "χ",
-        "ψ",
-        "ω"
-    ]
-    el_cap = [
-        "Α",
-        "Β",
-        "Γ",
-        "Δ",
-        "Ε",
-        "Ζ",
-        "Η",
-        "Θ",
-        "Ι",
-        "Κ",
-        "Λ",
-        "Μ",
-        "Ν",
-        "Ξ",
-        "Ο",
-        "Π",
-        "Ρ",
-        "Σ",
-        "Τ",
-        "Υ",
-        "Φ",
-        "Χ",
-        "Ψ",
-        "Ω"
-    ]
-    # TODO FIX Psari, not PSari
-    eng_low = [
-        "a",
-        "v",
-        "g",
-        "d",
-        "e",
-        "z",
-        "i",
-        "th",
-        "i",
-        "k",
-        "l",
-        "m",
-        "n",
-        "x",
-        "o",
-        "p",
-        "r",
-        "s",
-        "t",
-        "y",
-        "f",
-        
-        "ch",
-        "ps",
-        "o"
-    ]
-    eng_cap = [
-        "A",
-        "V",
-        "G",
-        "D",
-        "E",
-        "Z",
-        "I",
-        "TH",
-        "I",
-        "K",
-        "L",
-        "M",
-        "N",
-        "X",
-        "O",
-        "P",
-        "R",
-        "S",
-        "T",
-        "Y",
-        "F",
-        "CH",
-        "PS",
-        "O"
-    ]
+    from remove_accentuation import remove_accentuation
+    reference_string = string
+    string = remove_accentuation(string, 1)
+    lowcase = {
+        'α': 'a',
+        'β': 'v',
+        'γ': 'g',
+        'δ': 'd',
+        'ε': 'e',
+        'ζ': 'z',
+        'η': 'i',
+        'θ': 'th',
+        'ι': 'i',
+        'κ': 'k',
+        'λ': 'l',
+        'μ': 'm',
+        'ν': 'n',
+        'ξ': 'x',
+        'ο': 'o',
+        'π': 'p',
+        'ρ': 'r',
+        'σ': 's',
+        'τ': 't',
+        'υ': 'y',
+        'φ': 'f',
+        'χ': 'ch',
+        'ψ': 'ps',
+        'ω': 'o'
+    }
+    caps = {
+        'Α': 'A',
+        'Β': 'V',
+        'Γ': 'G',
+        'Δ': 'D',
+        'Ε': 'E',
+        'Ζ': 'Z',
+        'Η': 'I',
+        'Θ': 'TH',
+        'Ι': 'I',
+        'Κ': 'K',
+        'Λ': 'L',
+        'Μ': 'M',
+        'Ν': 'N',
+        'Ξ': 'X',
+        'Ο': 'O',
+        'Π': 'P',
+        'Ρ': 'R',
+        'Σ': 'S',
+        'Τ': 'T',
+        'Υ': 'Y',
+        'Φ': 'F',
+        'Χ': 'CH',
+        'Ψ': 'PS',
+        'Ω': 'O'
+    }
     # Simple digraphs with no extra rules or edge cases
     # No need for mixed casing "Γγ" or "Γξ" against Greek phonology
     el_simple_digraphs = [
-        "γγ",
-        "γξ",
-        "γχ"
+        'γγ',
+        'γξ',
+        'γχ'
     ]
-    el_simple_cap_digraphs = [
+    eng_simple_digraphs = [
+        'ng',
+        'nx',
+        'nch'
+    ]
+    el_simple_cap_digraphs = {
         "ΓΓ",
         "ΓΞ",
         "ΓΧ"
-    ]
-    eng_simple_digraphs = [
-        "ng",
-        "nx",
-        "nch"
-    ]
+    }
     eng_simple_cap_digraphs = [
         "NG",
         "NX",
@@ -130,9 +78,9 @@ def greek_elot_transliteration(string: str):
     ]
 
     el_mono_digraph_sub = [
-        "Θ",
-        "Χ",
-        "Ψ"
+        "TH",
+        "CH",
+        "PS"
     ]
 #   Accent based digraphs
 #    el_low_acc_digraphs = [
@@ -151,7 +99,7 @@ def greek_elot_transliteration(string: str):
 #        "Αϋ",
 #
 #        "Έυ",
-#      "Εϋ",
+#        "Εϋ",
 #
 #        "Ήυ",
 #        "Ηϋ"
@@ -186,17 +134,18 @@ def greek_elot_transliteration(string: str):
         "ευ",
         "ηυ"
     ]
-    eng_xu_digraphs = [
+    eng_xu_digraphs_v = [
         "av",
-        "af",
         "ev",
+        "iv"
+    ]
+    eng_xu_digraphs_f = [
+        "af",
         "ef",
-        "iv",
         "if"
     ]
-#   List related to xu lists
     xu_sound_modifiers_v = [
-#    β, γ, δ, ζ, λ, μ, ν, ρ, α, ε, η, ι, ο, υ, ω
+
         "β",
         "γ",
         "δ",
@@ -214,8 +163,9 @@ def greek_elot_transliteration(string: str):
         "υ",
         "ω"
     ]
+#   +empty space (accounted for in code)
     xu_sound_modifiers_f = [
-#        θ, κ, ξ, π, σ, τ, φ, χ, ψ, empty space
+
         "θ",
         "κ",
         "ξ",
@@ -226,46 +176,59 @@ def greek_elot_transliteration(string: str):
         "χ",
         "ψ"
     ]
-    print(string)
-    new_string = string
 #   Replace ς with σ
-    new_string = new_string.replace("ς","σ")
+    prep_string = string.replace("ς", "σ")
 #   if el_low_acc_digraphs or el_mix_acc_digraphs or el_cap_acc_digraphs in string:
 #   Do nothing, we don't care with current implementation
+#   Prepare the Unicode tables for use with translate()
+    lowcase = string.maketrans(lowcase)
+    caps = string.maketrans(caps)
+    reference_string_list = reference_string.split(" ")
+    new_string_list = prep_string.split(" ")
+    output = ""
+    current_iteration = 0
+    for new_string in new_string_list:
+        #   Replace all digraphs, so they're ignored by the simple transcription
+        for i in el_simple_digraphs:
+            if i in string:
+                new_string = new_string.replace(i, eng_simple_digraphs[el_simple_digraphs.index(i)])
+        for i in el_simple_cap_digraphs:
+            if i in string:
+                new_string = new_string.replace(i, eng_simple_cap_digraphs[el_simple_digraphs.index(i)])
+#       Check which "mp" sound to use depending on if it's at word start
+        for i in el_mp_digraph:
+            if i in string:
+                if string.startswith(i):
+                    new_string = new_string.replace(i, eng_mp_digraph_0[el_mp_digraph.index(i)], 1)
+                    new_string = new_string.replace(i, eng_mp_digraph_1[el_mp_digraph.index(i)])
+#       Check what VOWEL+"υ" should transliterate to depending on the following letter.
+        for i in el_xu_digraphs:
+            if i in new_string:
+                if len(new_string) > 2:  # Make sure we're not calling an out of range index
+                    for loop in xu_sound_modifiers_f:
+                        if new_string[new_string.find(i)+2] in loop:
+                            new_string = new_string.replace(i, eng_xu_digraphs_f[el_xu_digraphs.index(i)])
 
-#   Replace all digraphs so they're ignored by the simple transcription
-    for i in el_simple_digraphs:
-        if i in string:
-            print(new_string.replace(i, eng_simple_digraphs[el_simple_digraphs.index(i)]))
-            new_string = new_string.replace(i, eng_simple_digraphs[el_simple_digraphs.index(i)])
-    for i in el_simple_cap_digraphs:
-        if i in string:
-            new_string = new_string.replace(i, eng_simple_cap_digraphs[el_simple_digraphs.index(i)])
-#   TODO: ROMANIZE ACCENTS
-    for i in el_mp_digraph:
-        if i in string:
-            if string.startswith(i):
-                new_string = new_string.replace(i, eng_mp_digraph_0[el_mp_digraph.index(i)], 1)
-            new_string = new_string.replace(i, eng_mp_digraph_1[el_mp_digraph.index(i)])
-    for i in el_xu_digraphs:
-        if i in string:
-            for loop in xu_sound_modifiers_f:
-                if string[string.find(i)+1] in loop:
-                    new_string = new_string.replace(i, eng_xu_digraphs[el_xu_digraphs.index(i)+1])
-            for loop in xu_sound_modifiers_v:
-                if string[string.find(i)+1] in loop:
-                    new_string = new_string.replace(i, eng_xu_digraphs[el_xu_digraphs.index(i)])
-#   Simple transliteration
-    for i in el_low:
-        if i in el_low:
-            new_string = new_string.replace(i, eng_low[el_low.index(i)])
-    for i in el_cap:
-        if i in el_cap:
-            new_string = new_string.replace(i, eng_cap[el_cap.index(i)])
-    #Normalize capital letters if needed
-    print(string)
-    for i in el_mono_digraph_sub:
-        if string.startswith(i):
-            if string[2].islower() == True:
-                new_string = new_string.replace(new_string[1], new_string[1].lower())
-    return new_string
+                    for loop in xu_sound_modifiers_v:
+                        if new_string[new_string.find(i)+2] in loop:
+                            new_string = new_string.replace(i, eng_xu_digraphs_v[el_xu_digraphs.index(i)])
+                if len(new_string) == 2:  # Account for VOWEL+"υ" at end of sentence
+                    new_string = new_string.replace(i, eng_xu_digraphs_f[el_xu_digraphs.index(i)])
+        if "ου" in reference_string[current_iteration]:
+            new_string = new_string.replace("ου", "ou")
+        if "όυ" or "οϋ" in reference_string[current_iteration]:
+            new_string = new_string.replace("ου", "oy")
+        current_iteration += 1
+
+#   Simple transcription
+        new_string = new_string.translate(caps)
+        new_string = new_string.translate(lowcase)
+#   Normalize capital letters if needed
+        for i in el_mono_digraph_sub:
+            if new_string.startswith(i):
+                if new_string[3].islower() is True:
+                    new_string = new_string.replace(new_string[1], new_string[1].lower())
+        new_string += " "
+        output += new_string
+    return output
+print(greek_elot_transliteration("Με λένε στέλιο και λατρεύω το τρόυ"))
