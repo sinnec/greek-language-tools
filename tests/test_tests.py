@@ -20,10 +20,10 @@ def test_remove_accentuation():
 def test_transilteration():
 
     assert greek_transliteration("fvtia") == "φωτια"
-    assert (
-        greek_transliteration("Gamow htane den htane na ginei")
-        == "Γαμος ητανε δεν ητανε να γινει"
-    )
+    assert greek_transliteration("kaWiki") == "καΐκι"
+    assert greek_transliteration("p;ita soybl;aki") == "πίτα σουβλάκι"
+    assert greek_transliteration("pro:yp;ouesh") == "προϋπόθεση"
+    assert greek_transliteration("GA:IDAROS") == "ΓΑΪΔΑΡΟΣ"
 
 
 def test_convert_final_s():
