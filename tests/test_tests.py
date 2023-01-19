@@ -2,6 +2,7 @@ from src.greeklt.capitalize import capitalize
 from src.greeklt.remove_accentuation import remove_accentuation
 from src.greeklt.greek_transliteration import greek_transliteration
 from src.greeklt.convert_final_s import convert_final_s
+from src.greeklt.greek_elot_transliteration import greek_elot_transliteration
 
 
 def test_capitalize():
@@ -28,3 +29,11 @@ def test_transilteration():
 def test_convert_final_s():
 
     assert convert_final_s("Φάροσ ΦΑΡΟΣ φάρος") == "Φάρος ΦΑΡΟΣ φάρος"
+
+
+def test_elot_transliteration():
+
+    assert greek_elot_transliteration("αυγό") == "avgo", "Failure in vowel+υ conversion, v"
+    assert greek_elot_transliteration("αυτο") == "afto", "Failure in vowel+υ conversion, f"
+    assert greek_elot_transliteration("αγγελος το αγχος του") == "angelos to anchos tou", "Failure in simple diphthongs"
+    assert greek_elot_transliteration("Θανασης") == "Thanasis", "Failure in diphthong capital normalization"
