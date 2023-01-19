@@ -1,8 +1,8 @@
-def greek_elot_transliteration(string: str):
+def greek_elot_transliteration(string):
     from remove_accentuation import remove_accentuation
-    reference_string = string
+#    reference_string = string
     string = remove_accentuation(string, 1)
-    lowcase = {
+    lowercase = {
         'α': 'a',
         'β': 'v',
         'γ': 'g',
@@ -59,22 +59,26 @@ def greek_elot_transliteration(string: str):
     el_simple_digraphs = [
         'γγ',
         'γξ',
-        'γχ'
+        'γχ',
+        'ου'
     ]
     eng_simple_digraphs = [
         'ng',
         'nx',
-        'nch'
+        'nch',
+        'ou'
     ]
-    el_simple_cap_digraphs = {
+    el_simple_cap_digraphs = [
         "ΓΓ",
         "ΓΞ",
-        "ΓΧ"
-    }
+        "ΓΧ",
+        "ΟΥ"
+    ]
     eng_simple_cap_digraphs = [
         "NG",
         "NX",
-        "NCH"
+        "NCH",
+        "OU"
     ]
 
     el_mono_digraph_sub = [
@@ -181,12 +185,11 @@ def greek_elot_transliteration(string: str):
 #   if el_low_acc_digraphs or el_mix_acc_digraphs or el_cap_acc_digraphs in string:
 #   Do nothing, we don't care with current implementation
 #   Prepare the Unicode tables for use with translate()
-    lowcase = string.maketrans(lowcase)
+    lowercase = string.maketrans(lowercase)
     caps = string.maketrans(caps)
-    reference_string_list = reference_string.split(" ")
+#    reference_string_list = reference_string.split(" ")
     new_string_list = prep_string.split(" ")
     output = ""
-    current_iteration = 0
     for new_string in new_string_list:
         #   Replace all digraphs, so they're ignored by the simple transcription
         for i in el_simple_digraphs:
@@ -194,7 +197,7 @@ def greek_elot_transliteration(string: str):
                 new_string = new_string.replace(i, eng_simple_digraphs[el_simple_digraphs.index(i)])
         for i in el_simple_cap_digraphs:
             if i in string:
-                new_string = new_string.replace(i, eng_simple_cap_digraphs[el_simple_digraphs.index(i)])
+                new_string = new_string.replace(i, eng_simple_cap_digraphs[el_simple_cap_digraphs.index(i)])
 #       Check which "mp" sound to use depending on if it's at word start
         for i in el_mp_digraph:
             if i in string:
@@ -214,15 +217,10 @@ def greek_elot_transliteration(string: str):
                             new_string = new_string.replace(i, eng_xu_digraphs_v[el_xu_digraphs.index(i)])
                 if len(new_string) == 2:  # Account for VOWEL+"υ" at end of sentence
                     new_string = new_string.replace(i, eng_xu_digraphs_f[el_xu_digraphs.index(i)])
-        if "ου" in reference_string[current_iteration]:
-            new_string = new_string.replace("ου", "ou")
-        if "όυ" or "οϋ" in reference_string[current_iteration]:
-            new_string = new_string.replace("ου", "oy")
-        current_iteration += 1
 
 #   Simple transcription
         new_string = new_string.translate(caps)
-        new_string = new_string.translate(lowcase)
+        new_string = new_string.translate(lowercase)
 #   Normalize capital letters if needed
         for i in el_mono_digraph_sub:
             if new_string.startswith(i):
@@ -231,4 +229,3 @@ def greek_elot_transliteration(string: str):
         new_string += " "
         output += new_string
     return output
-print(greek_elot_transliteration("Με λένε στέλιο και λατρεύω το τρόυ"))

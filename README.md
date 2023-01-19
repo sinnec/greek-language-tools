@@ -14,7 +14,7 @@ Import as any other module using the name `greeklt`
 
 - **capitalize(word)**
 
-Makes a word all caps without accentuation but adds dieresis when necessary:
+Makes a word all caps without accentuation, adding dieresis when necessary:
 
 ```
 word = "γάιδαρος"
@@ -25,7 +25,7 @@ word = "γάιδαρος"
 ΓΑΪΔΑΡΟΣ
 ```
 
-- **remove_accentuation(word)**
+- **remove_accentuation(word, modifier=0)**
 
 Removes accentuation but adds dieresis when necessary, without capitalizing:
 
@@ -36,7 +36,7 @@ word = "γάιδαρος"
 γαϊδαρος
 ```
 
-Works exceptionally well when you want to sort a list aphabetically and not based on unicode:
+Works exceptionally well when you want to sort a list alphabetically and not based on unicode:
 
 ```
 cities = ["Όσλο", "Λευκωσία", "Άκαμπα", "Ζυρίχη", "Ρώμη"]
@@ -47,7 +47,14 @@ cities = ["Όσλο", "Λευκωσία", "Άκαμπα", "Ζυρίχη", "Ρώ�
 >>> sorted(cities, key=remove_accentuation)
 ["Άκαμπα", "Ζυρίχη", "Λευκωσία", "Όσλο", "Ρώμη"]
 ```
+Also contains an option to never add dieresis, enabled by setting modifier to 1:
 
+```
+string = "Αιδόνι"
+
+>>> print(remove_accentuation(string))
+Αιδονι
+```
 - **convert_final_s(word)**
 
 Checks last letter of each word in a string. If it is a `σ` it is converted into a `ς` (final `σ`):
@@ -67,6 +74,7 @@ Transliterates a string written with latin characters into it's equivalent Greek
 ```
 
 This can come quite in handy when a user forgets to change the language and the word looks the same both in latin and Greek:
+
 ```
 # ANNA written in latin (Anna)
 name = "ANNA"
@@ -78,3 +86,16 @@ False
 >>> ANNA == ΑΝΝΑ
 False
 ```
+
+- **greek_elot_Transliteration(word/sentence)**
+
+Transliterates a string according to the ELOT 743 standard, frequently used in formal transcription settings (e.g passports, ID, etc)
+
+```
+
+name = "Ελευθέριος Βενιζέλος"
+
+>>> latin_name = greek_elot_transliteration(name)
+>>> print(latin_name)
+Eleftherios Venizelos
+
