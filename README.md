@@ -87,6 +87,27 @@ False
 False
 ```
 
+There's also the abillity to convert a word from latin to it's intended accentuated once in Greek:
+
+```
+>>> greek_transliteration("P;ita soybl;aki")
+Πίτα σουβλάκι
+>>> greek_transliteration("kaWiki")
+καΐκι
+>>> greek_transliteration("pro:yp;ouesh")
+προϋπόθεση
+>>> greek_transliteration("GA:IDAROS")
+ΓΑΪΔΑΡΟΣ
+```
+Note: The function takes as given that the user intended to write the work in Greek using the correct key sequence but just didn't switch their keyboard to Greek. It doesn't convert from Greeklish!
+
+```
+# Wrong key sequence by user.
+# They're supposed to press SHIFT + W and not just w for the ΅ character to appear.
+>>> greek_transliteration("kawiki")
+καςικι
+```
+
 - **greek_elot_Transliteration(word/sentence)**
 
 Transliterates a string according to the ELOT 743 standard, frequently used in formal transcription settings (e.g passports, ID, etc)
@@ -99,3 +120,4 @@ name = "Ελευθέριος Βενιζέλος"
 >>> print(latin_name)
 Eleftherios Venizelos
 
+```
